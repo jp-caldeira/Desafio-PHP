@@ -37,29 +37,24 @@
                        <textarea name="descricaoProduto" value="" rows="4" cols="50"></textarea><br><br>
               <button type="submit" name="Enviar" value="">Enviar</button>
          </form>
-<?php if($_POST){
-  echo "var_dump no POST:<br><br>";
-  var_dump($_POST);
-  echo "<br>";
-} else {
-  echo "Sem informações para exibir<br><br>";
-}
+<?php
+
+// if($_POST){
+//   echo "var_dump no POST:<br><br>";
+//   var_dump($_POST);
+//   echo "<br>";
+// } else {
+//   echo "Sem informações para exibir<br><br>";
+// }
 
 
-if($_FILES){
-echo "<br>var_dump no FILES:<br><br>";
-var_dump($_FILES);
-echo "<br>";
-} else {
-echo "Sem informações para exibir<br>";
-}
-
-if($_POST){
-echo "<br>Valores inseridos no $ POST:<br><br>";
-foreach ($_POST as $key => $value) {
- echo $key.": ".$value."<br>";
-}
-}
+// if($_FILES){
+// echo "<br>var_dump no FILES:<br><br>";
+// var_dump($_FILES);
+// echo "<br>";
+// } else {
+// echo "Sem informações para exibir<br>";
+// }
 
 if($_FILES){
   echo "<br>Valores inseridos no $ FILES [imgProduto]:<br><br>";
@@ -67,7 +62,6 @@ if($_FILES){
     echo $key.": ".$value."<br>";
   }
 }
-
 
 //pegando infos do json
 $arrayProdutos = file_get_contents('produtos.json');
@@ -82,14 +76,32 @@ if (!isset($arrayProdutos)){
    $id = $ultimoId + 1;
  }
 
+//array que depois vai ir pro dados
+ if($_POST){
+  $arrayInsert = ['idProduto' => $id, 'nome' => $_POST['NomeProduto'], 'preço' => $_POST['precoProduto'],'Descrição' => $_POST['descricaoProduto']];
+ }
+
 //salvando a imagem na pasta
 if ($_FILES){
     $tempfile = $_FILES['imgProduto']['tmp_name'];
     $arquivoExt = pathinfo($_FILES['imgProduto']['name'], PATHINFO_EXTENSION);
     $arquivoNome = "imgProduto".$id.".".$arquivoExt;
     move_uploaded_file($tempfile, 'img/'.$arquivoNome);
+    $arrayInsert["imagem"] = "img/".$arquivoNome;
 }
 
+
+if(isset($arrayInsert)){
+    $arrayProdutos[$id] = $arrayInsert;
+    $produtoData = json_encode($arrayProdutos);
+    file_put_contents('produtos.json', $produtoData);
+   echo "<br>Informações inseridas com sucesso!<br>";
+foreach ($arrayInsert as $key => $value) {
+    echo "<br>".$key.": ".$value."<br>";
+}
+} else {
+  echo "<br><br>......................ainda sem nada para exibir.......<br>";
+}
 
 
 
