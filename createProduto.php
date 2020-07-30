@@ -1,12 +1,5 @@
 <?php
 
-//criar uma tela com um formulário no qual o usuário poderá cadastrar produtos
-//deve ter os seguintes campos:
-//- nome do produto
-//- descrição do produto
-//- preço
-//- foto (upload)
-
 //deve-se validar os campos do lado do servidor, e, eventualmente, destacar os campos preenchidos incorretamente
 //segundos os critérios:
 // - preço deve ser número
@@ -14,6 +7,32 @@
 //descrição é opcional
 //salvar num arquivo json
 //cada produto deve ter um número inteiro único como identificador
+
+$nomeOK = true;
+$precoOK = true;
+$fotoOK = true;
+
+
+
+if($_POST){
+  $nomeProduto = $_POST['NomeProduto'];
+  $nomeProduto = trim($nomeProduto);
+if (empty($nomeProduto) || strlen($nomeProduto) < 3){
+  echo "nome do produto não foi digitado corretamente";
+  $nomeOK = false;
+} 
+}
+
+if($_POST){
+  $preco = $_POST['precoProduto'];
+  $preco = str_replace(",",".", $preco);
+       if(!is_numeric($preco) || $preco < 0){
+      echo "preço digitado incorretamente. PREÇO não pode ser vazio nem ser negativo";
+       $precoOK = false;
+        }
+}
+
+
 
  ?>
 
@@ -28,10 +47,12 @@
      <h1>Cadastre seu produto</h1>
          <form action="createProduto.php" method="post" enctype="multipart/form-data">
                <label for="nomeProduto">Nome do produto:</label><br>
-                    <input type="text" name="NomeProduto" value="" required><br><br>
-               <label for="precoProduto">Preço:</label><br>
-                    <input type="text" name="precoProduto" value="" required><br><br>
-               <label for="imgProduto">Insira a imagem do produto:</label><br>
+                    <input type="text" name="NomeProduto" value="" required><br>
+                    <?php echo $nomeOK ? "" : "Nome foi digitado incorretamente!<br>"; ?>
+               <br><label for="precoProduto">Preço:</label><br>
+                    <input type="text" name="precoProduto" value="" required><br>
+                    <?php echo $precoOK ? "" : "Preço incorreto! O preço do produto não pode estar vazio!<br>"; ?>
+                    <br><label for="imgProduto">Insira a imagem do produto:</label><br>
                   <input type="file" name="imgProduto" value="" required><br><br>
                   <label for="descricaoProduto">Descrição do produto (opcional):</label><br>
                        <textarea name="descricaoProduto" value="" rows="4" cols="50"></textarea><br><br>
@@ -39,36 +60,13 @@
          </form>
 <?php
 
-// if($_POST){
-//   echo "var_dump no POST:<br><br>";
-//   var_dump($_POST);
-//   echo "<br>";
-// } else {
-//   echo "Sem informações para exibir<br><br>";
-// }
-
-
-// if($_FILES){
-// echo "<br>var_dump no FILES:<br><br>";
-// var_dump($_FILES);
-// echo "<br>";
-// } else {
-// echo "Sem informações para exibir<br>";
-// }
-
-if($_FILES){
-  echo "<br>Valores inseridos no $ FILES [imgProduto]:<br><br>";
-  foreach ($_FILES['imgProduto'] as $key => $value) {
-    echo $key.": ".$value."<br>";
-  }
-}
 
 //pegando infos do json
 $arrayProdutos = file_get_contents('produtos.json');
 
 $arrayProdutos = json_decode($arrayProdutos, true);
 
-//setando um id que autoincrementa
+//setando um id que 
 if (!isset($arrayProdutos)){
    $id = 1;
  } else {
@@ -76,32 +74,43 @@ if (!isset($arrayProdutos)){
    $id = $ultimoId + 1;
  }
 
-//array que depois vai ir pro dados
+//array que depois vai ir pro json
  if($_POST){
   $arrayInsert = ['idProduto' => $id, 'nome' => $_POST['NomeProduto'], 'preço' => $_POST['precoProduto'],'Descrição' => $_POST['descricaoProduto']];
  }
 
 //salvando a imagem na pasta
-if ($_FILES){
+if (isset($_FILES['name'])){
     $tempfile = $_FILES['imgProduto']['tmp_name'];
     $arquivoExt = pathinfo($_FILES['imgProduto']['name'], PATHINFO_EXTENSION);
     $arquivoNome = "imgProduto".$id.".".$arquivoExt;
     move_uploaded_file($tempfile, 'img/'.$arquivoNome);
-    $arrayInsert["imagem"] = "img/".$arquivoNome;
-}
+    $arrayInsert["imagem"] = "img/".$arquivoNome;    
+  } else {
+    $fotoOK = false;
+  }
 
+
+
+
+//botando infos no json
 
 if(isset($arrayInsert)){
-    $arrayProdutos[$id] = $arrayInsert;
-    $produtoData = json_encode($arrayProdutos);
-    file_put_contents('produtos.json', $produtoData);
-   echo "<br>Informações inseridas com sucesso!<br>";
-foreach ($arrayInsert as $key => $value) {
-    echo "<br>".$key.": ".$value."<br>";
-}
-} else {
-  echo "<br><br>......................ainda sem nada para exibir.......<br>";
-}
+  if($precoOK && $nomeOK && $fotoOK){
+        $arrayProdutos[$id] = $arrayInsert;
+        $produtoData = json_encode($arrayProdutos);
+        file_put_contents('produtos.json', $produtoData);
+      echo "<br>Informações inseridas com sucesso!<br>";
+    foreach ($arrayInsert as $key => $value) {
+        echo "<br>".$key.": ".$value."<br>";
+    } //tira esse foreach depois
+    } else {
+      echo "<br><br>Corrija suas informações para salvar o produto.<br>";
+    }
+    } else {
+      echo "<br>Insira suas informações acima......<br>";
+
+    }
 
 
 

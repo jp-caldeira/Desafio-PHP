@@ -5,11 +5,6 @@ $arrayProdutos = file_get_contents('produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 
 
-foreach($arrayProdutos as $produto){
-    foreach($produto as $key => $value){
-      echo $key.": ".$value."<br>";
-    }
-  }
 
  ?>
 
