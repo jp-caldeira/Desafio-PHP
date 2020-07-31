@@ -1,14 +1,22 @@
 <?php
 
+session_start();
+
 $arrayProdutos = file_get_contents('produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 $produtoId = $_GET['produto'];
+
+if(!$_GET){
+   $_SESSION['msgEdit'] = "Escolha um produto para editar";
+   header('Location:indexProdutos.php');
+   }
+
 
 
  ?>
 
 
-  
+
 </body>
 </html>
 
