@@ -11,14 +11,21 @@
 //senha criptografada
 session_start();
 
-var_dump($_POST);
-
 $senhaValid1 = true;
 $senhaValid2 = true;
 $nomeOK = true;
 $emailOK = true;
 $senhaOK = true;
 
+$arrayClientes = file_get_contents('usuarios.json');
+$arrayClientes = json_decode($arrayClientes, true);
+
+if($arrayClientes){
+      foreach ($arrayClientes as $clientes){
+          $newEmail = $clientes["email"];
+          $arrayEmails[] = $newEmail;
+      }
+}
 
 //validações
 if($_POST){
@@ -32,24 +39,31 @@ if($_POST){
   $senha2 = trim($senha2);
     //validando nome
     if(empty($nomeUsuario) || strlen($nomeUsuario) < 5) {
-      echo "<br><br>nome inválido<br>";
+      echo "Nome inválido<br>";
       $nomeOK = false;
     } else {
-      echo "<br><br>nome OK<br>";
+      echo "Nome OK<br>";
     }
   //validando email
   if(empty($email)) {
-    echo "<br>email inválido<br>";
+    echo "email inválido<br>";
     $emailOK = false;
   } else {
-    echo "<br>email OK<br>";
+    echo "email OK<br>";
   }
+
+  if($arrayClientes){
+    if (in_array($email, $arrayEmails)){
+    echo "Email já cadastrado no sistema.<br>";
+    $emailOK = false;
+  }
+}
   //validando senha
   if(strlen($senha1) < 6){
-        echo "<br>senha deve ter pelo menos seis caracteres<br>";
+        echo "senha deve ter pelo menos seis caracteres<br>";
         $senhaValid1 = false;
       } else {
-        echo "<br>senha ok<br>";
+        echo "Senha ok<br>";
       }
 
       if ($senha1 === $senha2){
@@ -59,21 +73,30 @@ if($_POST){
         $senhaValid2 = false;
       }
 
-      //validando e criptografando 
+      //validando e criptografando
     if ($senhaValid1 && $senhaValid2){
         echo "as senhas são iguais e tem mais de seis caracteres<br>";
         $criptoSenha = password_hash($senha1, PASSWORD_DEFAULT);
       } else {
-        echo "<h4>Há algo de errado com a senha. Ou ela tem menos de seis caracteres ou as senhas não são iguais</h4>";
+        echo "Há algo de errado com a senha. Ou ela tem menos de seis caracteres ou as senhas não são iguais<br>";
         $senhaOK = false;
+      }
+//salvando no json
+
+
+
+
+    if($nomeOK && $emailOK && $senhaOK){
+        $arrayinsert = ["nome" => $nomeUsuario, "email" => $email, "senha" => $criptoSenha];
+        $arrayClientes[$email] = $arrayinsert;
+        $arrayClientes = json_encode($arrayClientes);
+        file_put_contents('usuarios.json', $arrayClientes);
+        echo "<strong>Usuário cadastrado com sucesso</strong><br>";
+      } else {
+        echo "Usuário não foi cadastrado.<br>";
       }
 
 }
-
-
-
-
-
 
 
  ?>
