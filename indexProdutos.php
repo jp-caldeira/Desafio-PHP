@@ -18,21 +18,22 @@ if(isset($_SESSION['msgEdit'])){
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
     <title>Index Produtos</title>
   </head>
   <body>
       <h1>Lista de Produtos</h1>
-  <?php
-  foreach($arrayProdutos as $key => $produto){
-          ?>
+  <?php if($arrayProdutos): foreach($arrayProdutos as $key => $produto):  ?>
               <div class="">
-                <h3><a href="editProduto.php?produto=<?=$produto['idProduto']?>"><?=$produto['nome']?></a></h3>
+                <h3><a href="showProduto.php?produto=<?=$produto['idProduto']?>"><?=$produto['nome']?></a></h3>
                 <span>Preço: R$ <?=$produto['preço']?>
                 <br>ID: <?=$key ?>
                 <br><?=$produto['descrição']?>
 
               </div>
-        <?php  }
-        ?>
+        <?php  endforeach; else: ?>
+       <p>Nenhuma informação para exibir. Vá para a página de <a href='createProduto.php'>cadastro de produtos</a></p>
+     <?php endif; ?>
+
   </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 
+
+session_start();
 $nomeOK = true;
 $precoOK = true;
 $fotoOK = true;

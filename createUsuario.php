@@ -1,14 +1,5 @@
 <?php
-//campos:
-//nome
-//email
-//senha
-//confirmação de senha
 
-//nome e email são obrigatórios
-//senha deve ter pelo menos 6 caracteres
-//senha e confirmação devem ser iguais
-//senha criptografada
 session_start();
 
 $senhaValid1 = true;
@@ -83,9 +74,6 @@ if($_POST){
       }
 //salvando no json
 
-
-
-
     if($nomeOK && $emailOK && $senhaOK){
         $arrayinsert = ["nome" => $nomeUsuario, "email" => $email, "senha" => $criptoSenha];
         $arrayClientes[$email] = $arrayinsert;
@@ -95,9 +83,7 @@ if($_POST){
       } else {
         echo "Usuário não foi cadastrado.<br>";
       }
-
 }
-
 
  ?>
 
