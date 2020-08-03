@@ -1,6 +1,6 @@
 <?php
   var_dump($_POST);
-
+echo "<br><br><br>";
 if($_POST){
     $arrayClientes = file_get_contents('usuarios.json');
     $arrayClientes = json_decode($arrayClientes, true);
@@ -11,6 +11,7 @@ foreach($arrayClientes as $cliente){
 }
 }
 var_dump($arrayEmails);
+echo "<br><br><br>";
 
 
  ?>

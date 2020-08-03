@@ -5,7 +5,7 @@ session_start();
   if(isset($_GET['produto'])){
       $arrayProdutos = file_get_contents('produtos.json');
       $arrayProdutos = json_decode($arrayProdutos, true);
-      $produtoId = $_GET['produto'];      
+      $produtoId = $_GET['produto'];
   }
 
 
