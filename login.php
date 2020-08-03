@@ -1,12 +1,6 @@
 <?php
 
-session_start();
-
-var_dump($_POST);
-
 include ('verify-login.php');
-
-
 
  ?>
 
@@ -22,9 +16,21 @@ include ('verify-login.php');
       <h1>Faça seu login</h1>
       <form class="" action="verify-login.php" method="post">
         <label for="Email">E-mail:</label><br>
-          <input type="email" name="Email" value=""><br>
+        <?php if(isset($_SESSION['emailErr'])): ?>
+          <input type="email" name="Email" style="background:yellow" value="<?php if (isset($_SESSION['user'])) : echo $_SESSION['user']; unset($_SESSION['user']); else: echo ''; endif; ?>"><br>
+            <?= $_SESSION['emailErr']."<br>";
+             unset($_SESSION['emailErr']);
+             else : ?>
+           <input type="email" name="Email" value="<?php if (isset($_SESSION['user'])) : echo $_SESSION['user']; unset($_SESSION['user']); else: echo ''; endif; ?>"><br>
+          <?php endif; ?>
         <label for="pass">Senha:</label><br>
-          <input type="password" name="pass" value=""><br>
+          <?php if(isset($_SESSION['erroSenha'])):?>
+            <input type="password" name="pass" style="background:yellow" value=""><br>
+          <?php   echo $_SESSION['erroSenha'];
+                  unset($_SESSION['erroSenha']);
+                  else :?>
+            <input type="password" name="pass" value=""><br>
+          <?php endif; ?>
         <br><button type="submit" name="Login" value="">Login</button>
       </form>
 

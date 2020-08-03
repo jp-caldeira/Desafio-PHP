@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION['usuariologado'])){
+    header('Location:acess-denied.html');
+    die();
+}
+
 $arrayProdutos = file_get_contents('produtos.json');
 
 $arrayProdutos = json_decode($arrayProdutos, true);

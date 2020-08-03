@@ -2,6 +2,11 @@
 
 include 'removerUsuario.php';
 
+if(!isset($_SESSION['usuariologado'])){
+    header('Location:acess-denied.html');
+    die();
+}
+
 if (isset($_SESSION['msgRemove'])){
   echo $_SESSION['msgRemove'];
   unset($_SESSION['msgRemove']);
@@ -11,7 +16,7 @@ $arrayClientes = file_get_contents('usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
  ?>
- 
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

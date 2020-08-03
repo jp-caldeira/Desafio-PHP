@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION['usuariologado'])){
+    header('Location:acess-denied.html');
+    die();
+}
+
 $senhaValid1 = true;
 $senhaValid2 = true;
 $nomeOK = true;
@@ -108,5 +113,13 @@ if($_POST){
                   <input type="password" name="confirmaSenha" value=""><br>
                   <button type="submit" name="button">Enviar</button>
           </form>
+<?php
+if(isset($_SESSION['usuariologado'])): ?>
+    <form class="" action="login.php" method="post">
+      <button type="submit" name="logoff">Sair do sistema</button>
+    </form>
+<?php endif; ?>
+
+
   </body>
 </html>

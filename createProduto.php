@@ -2,6 +2,12 @@
 
 
 session_start();
+
+if(!isset($_SESSION['usuariologado'])){
+    header('Location:acess-denied.html');
+    die();
+}
+
 $nomeOK = true;
 $precoOK = true;
 $fotoOK = true;

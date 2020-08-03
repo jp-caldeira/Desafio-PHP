@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION['usuariologado'])){
+    header('Location:acess-denied.html');
+    die();
+}
+
   if(isset($_GET['produto'])){
       $arrayProdutos = file_get_contents('produtos.json');
       $arrayProdutos = json_decode($arrayProdutos, true);
@@ -9,7 +14,7 @@ session_start();
   }
 
 
-?>
+  ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -28,7 +33,7 @@ session_start();
             <p>ID: <?=$arrayProdutos[$produtoId]['idProduto'] ?></p>
           <button><a href="editProduto.php?produto=<?=$produtoId?>">Editar</a></button>
       <?php else : ?>
-            <p>Escolha uma produto para visualizar na <a href='indexProdutos.php'>lista de produtos</a></p>
+            <p>Escolha um produto para visualizar na <a href='indexProdutos.php'>lista de produtos</a></p>
         <?php endif; ?>
       </div>
 
