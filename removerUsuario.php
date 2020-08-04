@@ -8,10 +8,12 @@ if ($_POST){
   $arrayClientes = json_decode($arrayClientes, true);
     if(isset($_POST['remover'])){
         $email = $_POST['remover'];
-        unset($arrayClientes[$email]);
-        $arrayClientes = json_encode($arrayClientes);
-        file_put_contents('usuarios.json', $arrayClientes);
-        $_SESSION['msgRemove'] = "O usuário <strong>".$email."</strong> foi removido";
+        $_SESSION['nomeRemovido'] = $arrayClientes[$email]['nome'];
+         unset($arrayClientes[$email]);
+         $arrayClientes = json_encode($arrayClientes);
+         file_put_contents('usuarios.json', $arrayClientes);
+        $_SESSION['msgRemove'] = "O usuário <strong>".$_SESSION['nomeRemovido']."</strong> foi removido<br>";
+        echo $_SESSION['msgRemove'];
         header("Location:indexUsuarios.php");
         }
 }
