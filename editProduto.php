@@ -20,6 +20,7 @@ $arrayProdutos = file_get_contents('produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 $produtoId = $_GET['produto'];
 
+///
 $nomeOK = true;
 $precoOK = true;
 $fotoOK = true;

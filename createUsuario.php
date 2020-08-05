@@ -50,13 +50,13 @@ if($_POST){
 
   if($arrayClientes){
     if (in_array($email, $arrayEmails)){
-    echo "Email já cadastrado no sistema.<br>";
+    echo "Email já cadastrado no sistema<br>";
     $emailOK = false;
   }
 }
   //validando senha
   if(strlen($senha1) < 6){
-        echo "senha deve ter pelo menos seis caracteres<br>";
+        echo "Senha deve ter pelo menos seis caracteres<br>";
         $senhaValid1 = false;
       } else {
         echo "Senha ok<br>";
@@ -86,7 +86,7 @@ if($_POST){
         file_put_contents('usuarios.json', $arrayClientes);
         echo "<strong>Usuário cadastrado com sucesso</strong><br>";
       } else {
-        echo "Usuário não foi cadastrado.<br>";
+        echo "Usuário não foi cadastrado. Revise as informações e tente novamente.<br>";
       }
 }
 
@@ -118,7 +118,13 @@ if(isset($_SESSION['usuariologado'])): ?>
     <form class="" action="login.php" method="post">
       <button type="submit" name="logoff">Sair do sistema</button>
     </form>
-<?php endif; ?>
+<?php endif;
+
+echo "<br><br>";
+include 'indexUsuarios.php';
+
+ ?>
+
 
 
   </body>

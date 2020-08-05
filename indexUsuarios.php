@@ -1,11 +1,13 @@
 <?php
 
-include 'removerUsuario.php';
+  if(!isset($_SESSION)){
+    session_start();
+  }
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
-    die();
-}
+     header('Location:acess-denied.html');
+     die();
+ }
 
 if (isset($_SESSION['msgRemove'])){
   echo $_SESSION['msgRemove'];
