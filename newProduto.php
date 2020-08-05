@@ -15,18 +15,14 @@ if($_POST){
 if (empty($nomeProduto) || strlen($nomeProduto) < 3){
   $_SESSION['errNomeProduto'] = "O campo <strong>NOME</strong> do produto não foi digitado corretamente<br>";
   $nomeOK = false;
-}
-}
-
+  }
 //validação preço
-if($_POST){
   $preco = $_POST['precoProduto'];
-  $preco = str_replace(",",".", $preco);
-       if(!is_numeric($preco) || $preco < 0){
+  if(!is_numeric($preco) && $preco < 0){
         $_SESSION['erroPreco'] = "O <strong>preço</strong> foi digitado incorretamente. <strong>PREÇO</strong> deve ser um valor númerico, não pode ser vazio nem ser negativo<br>";
         $precoOK = false;
-        }
-}
+      }
+    }
 
 //pegando infos do json
 $arrayProdutos = file_get_contents('produtos.json');
@@ -42,7 +38,7 @@ if (!isset($arrayProdutos)){
 
  //array com infos que vão para o json
  if($_POST){
-     $arrayInsert = ['idProduto' => $id, 'nome' => $_POST['NomeProduto'], 'preço' => $_POST['precoProduto'],'descrição' => $_POST['descricaoProduto']];
+     $arrayInsert = ['idProduto' => $id, 'nome' => $nomeProduto, 'preço' => $preco,'descrição' => $descrição];
    }
 
 //validando se a foto é um arquivo válido

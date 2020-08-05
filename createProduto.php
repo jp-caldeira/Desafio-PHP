@@ -23,15 +23,17 @@ $arrayProdutos = json_decode($arrayProdutos, true);
    <body>
      <h1>Cadastro de produtos</h1>
      <?php
+
      if(isset($_SESSION['msgCadastro'])){
               $ultimoItem = array_key_last($arrayProdutos);
               if ($_SESSION['msgCadastro']){ ?>
               <br><p style='background-color:lightgreen'>Cadastro realizado com sucesso! Confira as informações abaixo:</p>
-              <h2><?=$arrayProdutos[$ultimoItem]['nome']?></h2>
-                  <img src="<?=$arrayProdutos[$ultimoItem]['imagem']?>" alt=""></p>
+                  <p>Nome:<?=$arrayProdutos[$ultimoItem]['nome']?></p>
                   <p>Descrição do produto:<?=$arrayProdutos[$ultimoItem]['descrição']?></p>
                   <p>Preço: R$ <?=$arrayProdutos[$ultimoItem]['preço']?></p>
                   <p>ID:<?=$arrayProdutos[$ultimoItem]['idProduto']?></p>
+                  <img src="<?=$arrayProdutos[$ultimoItem]['imagem']?>" alt=""></p>
+
             <?php unset($_SESSION['msgCadastro']);
                 } else { ?>
                   <p style='background-color:red'>Produto não foi cadastrado. Por favor, verifique os erros abaixo:</p>
@@ -41,7 +43,7 @@ $arrayProdutos = json_decode($arrayProdutos, true);
             <h3>Insira as informações abaixo para cadastrar um novo produto</h3>
          <form action="newProduto.php" method="post" enctype="multipart/form-data">
                <label for="nomeProduto">Nome do produto:</label><br>
-                    <input type="text" name="NomeProduto" value=""><br>
+                    <input type="text" name="NomeProduto" value="" required><br>
 
                     <?php if(isset($_SESSION['errNomeProduto'])) {
                         echo $_SESSION['errNomeProduto'];
@@ -49,14 +51,14 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                     } ?>
 
               <br><label for="precoProduto">Preço:</label><br>
-                    <input type="text" name="precoProduto" value=""><br>
+                    <input type="number" name="precoProduto" min="0" step="0.01" value="" required><br>
                     <?php if(isset($_SESSION['erroPreco'])){
                         echo $_SESSION['erroPreco'];
                         unset($_SESSION['erroPreco']);
                     } ?>
 
               <br><label for="imgProduto">Insira a imagem do produto:</label><br>
-                  <input type="file" name="imgProduto" value=""><br>
+                  <input type="file" name="imgProduto" value="" required><br>
                   <?php if(isset($_SESSION['erroFoto1'])){
                       echo $_SESSION['erroFoto1'];
                       unset($_SESSION['erroFoto1']);
