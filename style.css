@@ -1,6 +1,9 @@
-.page-content {
-    margin-top: 100px;    
-    padding: auto;
-    align-self: center;
+.main-content {
+
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: auto;
+  max-width: 42em;
 
 }

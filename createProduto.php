@@ -43,7 +43,7 @@ $arrayProdutos = json_decode($arrayProdutos, true);
             <h3>Insira as informações abaixo para cadastrar um novo produto</h3>
          <form action="newProduto.php" method="post" enctype="multipart/form-data">
                <label for="nomeProduto">Nome do produto:</label><br>
-                    <input type="text" name="NomeProduto" value="" required><br>
+                    <input type="text" name="NomeProduto" value="" ><br>
 
                     <?php if(isset($_SESSION['errNomeProduto'])) {
                         echo $_SESSION['errNomeProduto'];
@@ -51,14 +51,14 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                     } ?>
 
               <br><label for="precoProduto">Preço:</label><br>
-                    <input type="number" name="precoProduto" min="0" step="0.01" value="" required><br>
+                    <input type="number" name="precoProduto" min="0" step="0.01" value="" ><br>
                     <?php if(isset($_SESSION['erroPreco'])){
                         echo $_SESSION['erroPreco'];
                         unset($_SESSION['erroPreco']);
                     } ?>
 
               <br><label for="imgProduto">Insira a imagem do produto:</label><br>
-                  <input type="file" name="imgProduto" value="" required><br>
+                  <input type="file" name="imgProduto" value="" ><br>
                   <?php if(isset($_SESSION['erroFoto1'])){
                       echo $_SESSION['erroFoto1'];
                       unset($_SESSION['erroFoto1']);
