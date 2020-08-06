@@ -7,88 +7,9 @@ if(!isset($_SESSION['usuariologado'])){
     die();
 }
 
-$senhaValid1 = true;
-$senhaValid2 = true;
-$nomeOK = true;
-$emailOK = true;
-$senhaOK = true;
-
 $arrayClientes = file_get_contents('usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
-if($arrayClientes){
-      foreach ($arrayClientes as $clientes){
-          $newEmail = $clientes["email"];
-          $arrayEmails[] = $newEmail;
-      }
-}
-
-//validações
-if($_POST){
-  $nomeUsuario = $_POST['nomeUsuario'];
-  $nomeUsuario = trim($nomeUsuario);
-  $email = $_POST['emailUsuario'];
-  $email = trim($email);
-  $senha1 = $_POST['senhaUsuario'];
-  $senha1 = trim($senha1);
-  $senha2 = $_POST['confirmaSenha'];
-  $senha2 = trim($senha2);
-    //validando nome
-    if(empty($nomeUsuario) || strlen($nomeUsuario) < 5) {
-      echo "Nome inválido<br>";
-      $nomeOK = false;
-    } else {
-      echo "Nome OK<br>";
-    }
-  //validando email
-  if(empty($email)) {
-    echo "email inválido<br>";
-    $emailOK = false;
-  } else {
-    echo "email OK<br>";
-  }
-
-  if($arrayClientes){
-    if (in_array($email, $arrayEmails)){
-    echo "Email já cadastrado no sistema<br>";
-    $emailOK = false;
-  }
-}
-  //validando senha
-  if(strlen($senha1) < 6){
-        echo "Senha deve ter pelo menos seis caracteres<br>";
-        $senhaValid1 = false;
-      } else {
-        echo "Senha ok<br>";
-      }
-
-      if ($senha1 === $senha2){
-        echo "as duas senhas são iguais<br>";
-      } else {
-        echo "as senhas não são iguais<br>";
-        $senhaValid2 = false;
-      }
-
-      //validando e criptografando
-    if ($senhaValid1 && $senhaValid2){
-        echo "as senhas são iguais e tem mais de seis caracteres<br>";
-        $criptoSenha = password_hash($senha1, PASSWORD_DEFAULT);
-      } else {
-        echo "Há algo de errado com a senha. Ou ela tem menos de seis caracteres ou as senhas não são iguais<br>";
-        $senhaOK = false;
-      }
-//salvando no json
-
-    if($nomeOK && $emailOK && $senhaOK){
-        $arrayinsert = ["nome" => $nomeUsuario, "email" => $email, "senha" => $criptoSenha];
-        $arrayClientes[$email] = $arrayinsert;
-        $arrayClientes = json_encode($arrayClientes);
-        file_put_contents('usuarios.json', $arrayClientes);
-        echo "<strong>Usuário cadastrado com sucesso</strong><br>";
-      } else {
-        echo "Usuário não foi cadastrado. Revise as informações e tente novamente.<br>";
-      }
-}
 
  ?>
 
@@ -101,16 +22,62 @@ if($_POST){
   </head>
   <body>
     <h1>Cadastrar novo usuário</h1>
+      <!-- exibindo mensagem de sucesso ou erro no cadastro -->
+     <?php if(isset($_SESSION['msgCadastroUser'])){
+              $ultimoItem = array_key_last($arrayClientes);
+              if ($_SESSION['msgCadastroUser']){ ?>
+              <div style='background-color:lightgreen'>
+              <br><p>Cadastro realizado com sucesso! Confira as informações abaixo:</p>
+                  <p>Nome:<?=$arrayClientes[$ultimoItem]['nome']?></p>
+                  <p>Email:<?=$arrayClientes[$ultimoItem]['email']?></p>                                                      
+              </div>
+            <?php unset($_SESSION['msgCadastroUser']);
+                } else { ?>
+                <div style='background-color:red'>
+                  <p>Usuário não foi cadastrado. Revise as informações e tente novamente. Por favor, verifique os erros abaixo:</p>
+                </div>
+                <?php unset($_SESSION['msgCadastroUser']); }
+                    } ?>
+        
+
       <p>Preencha as informações abaixo para cadastrar um novo usuário:</p>
-          <form class="" action="createUsuario.php" method="post">
-                <label for="nomeUsuario">Nome:</label><br>
-                    <input type="text" name="nomeUsuario" value=""><br>
+          <form class="" action="newUser.php" method="post">
+             <!-- nome do usuario    -->
+          <label for="nomeUsuario">Nome:</label><br>
+                <?php if (isset($_SESSION['errUserName'])){ ?>
+                  <input type="text" name="nomeUsuario" style="background-color:yellow" value=""><br>
+                     <?php echo $_SESSION['errUserName'];
+                        unset($_SESSION['errUserName']); ?> 
+                      <?php } else { ?>                      
+                      <input type="text" name="nomeUsuario" value=""><br>    
+                      <?php } ?>
+                <!-- email -->
                 <label for="emailUsuario">Email:</label><br>
-                    <input type="email" name="emailUsuario" value=""><br>
+                <?php if (isset($_SESSION['errUserEmail'])){?>
+                    <input type="email" name="emailUsuario" style='background-color:yellow' value=""><br>
+                    <?php echo $_SESSION['errUserEmail'];
+                        unset($_SESSION['errUserEmail']);
+                      } else { ?>
+                    <input type="email" name="emailUsuario" value=""><br>   
+                    <?php } ?>
+                        <!-- senha -->
                 <label for="senha">Senha:</label><br>
+                <?php if (isset($_SESSION['errNewSenha1'])){?>
+                    <input type="password" name="senhaUsuario" style='background-color:yellow' value=""><br>
+                    <?php echo $_SESSION['errNewSenha1'];
+                        unset($_SESSION['errNewSenha1']);
+                      } else { ?>
                     <input type="password" name="senhaUsuario" value=""><br>
+                    <?php } ?>
+                        <!-- confirma senha -->
                 <label for="senha">Confirme a senha:</label><br>
+                <?php if (isset($_SESSION['errNewSenha2'])){?>
+                    <input type="password" name="confirmaSenha" style='background-color:yellow' value=""><br>
+                    <?php echo $_SESSION['errNewSenha2'];
+                        unset($_SESSION['errNewSenha2']);
+                      } else { ?>
                   <input type="password" name="confirmaSenha" value=""><br>
+                    <?php } ?>
                   <button type="submit" name="button">Enviar</button>
           </form>
 <?php

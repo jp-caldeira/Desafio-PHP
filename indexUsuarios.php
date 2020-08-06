@@ -9,16 +9,6 @@ if(!isset($_SESSION['usuariologado'])){
      die();
  }
 
-if (isset($_SESSION['msgRemove'])){
-  echo $_SESSION['msgRemove'];
-  unset($_SESSION['msgRemove']);
-}
-
-if(isset($_SESSION['msgEditUser'])){
-    echo $_SESSION['msgEditUser'];
-    unset($_SESSION['msgEditUser']);
-}
-
 $arrayClientes = file_get_contents('usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
@@ -32,12 +22,23 @@ $arrayClientes = json_decode($arrayClientes, true);
     <title>Lista de usuários cadastrados</title>
   </head>
   <body>
+ <?php if (isset($_SESSION['msgRemove'])){
+  echo "<div style='background-color:yellow'>$_SESSION[msgRemove]</div>";
+  unset($_SESSION['msgRemove']); 
+} 
+
+if(isset($_SESSION['msgEditUser'])){
+    echo "<div style='background-color:yellow'>$_SESSION[msgEditUser]</div>";
+    unset($_SESSION['msgEditUser']);
+}
+
+?>
       <h1>Lista de usuários cadastrados</h1>
       <?php  if ($arrayClientes){
             foreach($arrayClientes as $cliente){ ?>
         <div class="">
-              <p><strong>Nome do usuário:</strong><?=$cliente["nome"]?></p>
-              <p><strong>Email:</strong><?=$cliente["email"]?></p>
+              <p><strong>Nome do usuário: </strong><?=$cliente["nome"]?></p>
+              <p><strong>Email: </strong><?=$cliente["email"]?></p>
               <button><a href="editUsuario.php?usuario=<?=$cliente["email"]?>">Editar Cliente</a></button>
               <form class="" action="removerUsuario.php" method="post">
               <button type="submit" name="remover" value="<?=$cliente["email"]?>">Remover Cliente</button>

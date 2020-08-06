@@ -5,12 +5,14 @@ session_start();
 if(isset($_POST['logoff'])){
   unset($_SESSION['usuariologado']);
   unset($_POST['logoff']);
+  unset($_SESSION['user']);
+  unset($_SESSION['pass']);
 }
 
 if($_POST){
     $emailLogin = $_POST['Email'];
     $_SESSION['user'] = $_POST['Email'];
-    $_SESSION['pass'] = $_POST['pass'];
+    $pass = $_POST['pass'];
     $arrayClientes = file_get_contents('usuarios.json');
     $arrayClientes = json_decode($arrayClientes, true);
 

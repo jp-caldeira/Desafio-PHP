@@ -68,10 +68,10 @@ if($_POST){
 
 if($_POST){
    if($nomeOK && $precoOK && $fotoOK){
-   $_SESSION['editProduto'] = "As informações foram atualizadas! Confira as informações abaixo:";
+   $_SESSION['editProduto'] = true;
    header("Location:editProduto.php?produto=$produtoId");
  } else {
-   $_SESSION['editProduto'] = "As informações não foram atualizadas. Por favor corrija os erros abaixo:";
+   $_SESSION['editProduto'] = false;
    header("Location:editProduto.php?produto=$produtoId");
  }
 }

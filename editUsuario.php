@@ -63,7 +63,7 @@ $_SESSION['currentPass'] = $arrayUsuarios[$user]['senha'];
                     <input type="text" name="nomeUsuario" value="<?=$arrayUsuarios[$user]['nome']?>" required><br>
                   <?php if (isset($_SESSION['erroNome'])): echo $_SESSION['erroNome']; unset($_SESSION['erroNome']); else: ""; endif;?>
                 <label for="emailUsuario">Email:</label><br>
-                    <input type="email" name="emailUsuario" value="<?=$arrayUsuarios[$user]['email']?>" required><br>
+                    <input type="email" name="emailUsuario" value="<?=$arrayUsuarios[$user]['email']?>"><br>
                 <?php if (isset($_SESSION['erroEmail'])): echo $_SESSION['erroEmail']; unset($_SESSION['erroEmail']); else: ""; endif;?>
                 <label for="senha">Nova senha:</label><br>
                     <input type="password" name="senhaUsuario" value="<?=$arrayUsuarios[$user]['senha']?>"><br>

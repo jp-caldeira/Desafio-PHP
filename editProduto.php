@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuariologado'])){
     die();
 }
 
-//verifica se foi selecionado alguma produto para editar
+//verifica se foi selecionado algum produto para editar
 if(!$_GET){
   $_SESSION['msgEdit'] = "Escolha um produto para editar";
   header('Location:indexProdutos.php');
@@ -38,13 +38,17 @@ $_SESSION['produtoId'] = $produtoId;
   </head>
   <body>
     <h1>Editar informações do produto</h1>
-    <div class="">
-      <?php if (isset($_SESSION['editProduto'])){
-                echo $_SESSION['editProduto'];
-                unset($_SESSION['editProduto']);
-                }
-                 ?>
-      <p>Nome do Produto:<?=$arrayProdutos[$produtoId]['nome']?></p>
+          <?php if (isset($_SESSION['editProduto'])){ 
+               if ($_SESSION['editProduto']){ ?>
+            <br><p style='background-color:lightgreen'>Cadastro realizado com sucesso! Confira as informações abaixo:</p>
+                 <?php unset($_SESSION['editProduto']);
+              } else { ?>
+                <p style='background-color:red'>Produto não foi cadastrado. Por favor, verifique os erros abaixo:</p>
+              <?php unset($_SESSION['editProduto']); }
+                  } ?>
+                
+    <div class="">   
+      <p>Nome do Produto: <?=$arrayProdutos[$produtoId]['nome']?></p>
       <p>Descrição do produto: <?=$arrayProdutos[$produtoId]['descrição']?></p>
       <p>Preço: R$ <?=$arrayProdutos[$produtoId]['preço']?></p>
       <p>ID: <?=$arrayProdutos[$produtoId]['idProduto'] ?></p>
@@ -52,14 +56,35 @@ $_SESSION['produtoId'] = $produtoId;
       <img src="<?=$arrayProdutos[$produtoId]['imagem']?>" alt="" width="200" height="200">
     </div>
     <form class="" action="editProd2.php" method="post" enctype="multipart/form-data">
+                    <!-- nome -->
       <label for="nomeProduto">Nome do produto:</label><br>
-           <input type="text" name="NomeProduto" value="<?=$arrayProdutos[$produtoId]['nome']?>" ><br>
+           <input type="text" name="NomeProduto" value="<?=$arrayProdutos[$produtoId]['nome']?>" required><br>
+                
+                <?php if(isset($_SESSION['errNomeProduto'])) {
+                        echo $_SESSION['errNomeProduto'];
+                        unset($_SESSION['errNomeProduto']);
+                    } ?>
+                <!-- preço -->
           <br><label for="precoProduto">Preço:</label><br>
-           <input type="number" name="precoProduto" min="0" step="0.01" value="<?=$arrayProdutos[$produtoId]['preço']?>"><br>
-           <?php // echo $precoOK ? "" : "<strong>Preço incorreto! O preço do produto não pode estar vazio</strong><br>"; ?>
+           <input type="number" name="precoProduto" min="0" step="0.01" value="<?=$arrayProdutos[$produtoId]['preço']?>" required><br>
+                  
+                 <?php if(isset($_SESSION['erroPreco'])){
+                        echo $_SESSION['erroPreco'];
+                        unset($_SESSION['erroPreco']);
+                    } ?>
+                <!-- imagem -->
            <br><label for="imgProduto">Insira a imagem do produto:</label><br>
          <input type="file" name="imgProduto" value=""><br>
-         <?php // echo $fotoExt ? "" : "A foto deve ser um arquivo JPEG, JPG ou PNG<br>"; ?>
+         
+                  <?php if(isset($_SESSION['erroFoto1'])){
+                            echo $_SESSION['erroFoto1'];
+                            unset($_SESSION['erroFoto1']);
+                        }
+                        if(isset($_SESSION['erroFoto2'])){
+                            echo $_SESSION['erroFoto2'];
+                            unset($_SESSION['erroFoto2']);
+                            } ?>
+
          <br><label for="descricaoProduto">Descrição do produto (opcional):</label><br>
               <textarea name="descricaoProduto" value="<?=$arrayProdutos[$produtoId]['descrição']?>" rows="4" cols="50"><?=$arrayProdutos[$produtoId]['descrição']?></textarea><br><br>
      <button type="submit" name="Enviar" value="">Enviar</button>

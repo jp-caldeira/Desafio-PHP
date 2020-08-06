@@ -8,16 +8,7 @@ if(!isset($_SESSION['usuariologado'])){
 }
 
 
-if(isset($_SESSION['removeProduto'])){
-    echo $_SESSION['removeProduto'];
-    unset($_SESSION['removeProduto']);
-}
 
-
-if(isset($_SESSION['msgEdit'])){
-    echo $_SESSION['msgEdit'];
-    unset($_SESSION['msgEdit']);
-}
 
 
 $arrayProdutos = file_get_contents('produtos.json');
@@ -36,6 +27,18 @@ $arrayProdutos = json_decode($arrayProdutos, true);
     <title>Index Produtos</title>
   </head>
   <body>
+<?php  if(isset($_SESSION['removeProduto'])){
+    echo "<div style='background-color:yellow'>$_SESSION[removeProduto]</div>";
+    unset($_SESSION['removeProduto']);
+}
+
+
+if(isset($_SESSION['msgEdit'])){
+  echo "<div style='background-color:yellow'>$_SESSION[msgEdit]</div>";
+    unset($_SESSION['msgEdit']);
+} ?>
+
+
       <h1>Lista de Produtos</h1>
   <?php if($arrayProdutos): foreach($arrayProdutos as $key => $produto):  ?>
               <div class="">
