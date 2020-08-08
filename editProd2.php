@@ -25,7 +25,7 @@ if($_POST){
      }
       //validação preço
        $preco = $_POST['precoProduto'];
-        if(!is_numeric($preco) && $preco < 0){
+        if(!is_numeric($preco) || $preco < 0){
           $precoOK = false;
           $_SESSION['erroPreco'] = "O <strong>preço</strong> foi digitado incorretamente. <strong>PREÇO</strong> deve ser um valor númerico, não pode ser vazio nem ser negativo<br>";
         } else {

@@ -13,13 +13,16 @@ if($_POST){
   $nomeProduto = $_POST['NomeProduto'];
   $nomeProduto = trim($nomeProduto);
 if (empty($nomeProduto) || strlen($nomeProduto) < 3){
-  $_SESSION['errNomeProduto'] = "O campo <strong>NOME</strong> do produto não foi digitado corretamente<br>";
+  $_SESSION['errNomeProduto'] = "<strong>Nome</strong> do produto não foi digitado corretamente<br>";
   $nomeOK = false;
   }
 //validação preço
   $preco = $_POST['precoProduto'];
-  if(!is_numeric($preco) && $preco < 0){
-        $_SESSION['erroPreco'] = "O <strong>preço</strong> foi digitado incorretamente. <strong>PREÇO</strong> deve ser um valor númerico, não pode ser vazio nem ser negativo<br>";
+  if(!is_numeric($preco)){
+        $_SESSION['erroPreco'] = "Preço deve ser um valor númerico";
+        $precoOK = false;
+      } elseif ($preco < 0){
+        $_SESSION['erroPreco'] = "Preço não pode ser menor que zero";
         $precoOK = false;
       }
     }
@@ -38,6 +41,7 @@ if (!isset($arrayProdutos)){
 
  //array com infos que vão para o json
  if($_POST){
+    $descrição = $_POST['descricaoProduto'];
      $arrayInsert = ['idProduto' => $id, 'nome' => $nomeProduto, 'preço' => $preco,'descrição' => $descrição];
    }
 

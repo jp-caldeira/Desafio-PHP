@@ -38,7 +38,7 @@ $_SESSION['produtoId'] = $produtoId;
   </head>
   <body>
     <h1>Editar informações do produto</h1>
-          <?php if (isset($_SESSION['editProduto'])){ 
+          <?php if (isset($_SESSION['editProduto'])){
                if ($_SESSION['editProduto']){ ?>
             <br><p style='background-color:lightgreen'>Cadastro realizado com sucesso! Confira as informações abaixo:</p>
                  <?php unset($_SESSION['editProduto']);
@@ -46,8 +46,8 @@ $_SESSION['produtoId'] = $produtoId;
                 <p style='background-color:red'>Produto não foi cadastrado. Por favor, verifique os erros abaixo:</p>
               <?php unset($_SESSION['editProduto']); }
                   } ?>
-                
-    <div class="">   
+
+    <div class="">
       <p>Nome do Produto: <?=$arrayProdutos[$produtoId]['nome']?></p>
       <p>Descrição do produto: <?=$arrayProdutos[$produtoId]['descrição']?></p>
       <p>Preço: R$ <?=$arrayProdutos[$produtoId]['preço']?></p>
@@ -59,7 +59,7 @@ $_SESSION['produtoId'] = $produtoId;
                     <!-- nome -->
       <label for="nomeProduto">Nome do produto:</label><br>
            <input type="text" name="NomeProduto" value="<?=$arrayProdutos[$produtoId]['nome']?>" required><br>
-                
+
                 <?php if(isset($_SESSION['errNomeProduto'])) {
                         echo $_SESSION['errNomeProduto'];
                         unset($_SESSION['errNomeProduto']);
@@ -67,7 +67,7 @@ $_SESSION['produtoId'] = $produtoId;
                 <!-- preço -->
           <br><label for="precoProduto">Preço:</label><br>
            <input type="number" name="precoProduto" min="0" step="0.01" value="<?=$arrayProdutos[$produtoId]['preço']?>" required><br>
-                  
+
                  <?php if(isset($_SESSION['erroPreco'])){
                         echo $_SESSION['erroPreco'];
                         unset($_SESSION['erroPreco']);
@@ -75,7 +75,7 @@ $_SESSION['produtoId'] = $produtoId;
                 <!-- imagem -->
            <br><label for="imgProduto">Insira a imagem do produto:</label><br>
          <input type="file" name="imgProduto" value=""><br>
-         
+
                   <?php if(isset($_SESSION['erroFoto1'])){
                             echo $_SESSION['erroFoto1'];
                             unset($_SESSION['erroFoto1']);
