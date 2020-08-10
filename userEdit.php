@@ -67,7 +67,7 @@ if($_POST){
 
             if (in_array($email, $arrayEmails)){
                 $_SESSION['erroEmail'] = "Email já cadastrado no sistema.<br>";
-                $_SESSION['msgCadastro'] = "Corrija as informações.<br>";
+                $_SESSION['msgCadastro'] = false;
                 $arrayInsert = ["nome" => $currentName, "email" => $currentEmail, "senha" => $currentPass];
                 $arrayClientes[$currentEmail] = $arrayInsert;
                 $arrayClientes = json_encode($arrayClientes);
@@ -79,11 +79,11 @@ if($_POST){
                 $arrayClientes[$email] = $arrayinsert;
                 $arrayClientes = json_encode($arrayClientes);
                 file_put_contents('usuarios.json', $arrayClientes);
-                $_SESSION['msgCadastro'] = "<strong>Usuário cadastrado com sucesso</strong><br>";
+                $_SESSION['msgCadastro'] = true;
                 header("Location:editUsuario.php?usuario=$email");
           }
       } else {
-          $_SESSION['msgCadastro'] = "Corrija as informações<br>";
+          $_SESSION['msgCadastro'] = false;
           header("Location:editUsuario.php?usuario=$email");
       }
 }

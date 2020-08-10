@@ -23,17 +23,17 @@ $arrayProdutos = json_decode($arrayProdutos, true);
   <body>
     <?php include 'navbar.php';
     if(isset($_SESSION['removeProduto'])){
-    echo "<div style='background-color:yellow'>$_SESSION[removeProduto]</div>";
+    echo "<div class='alert alert-warning' role='alert'>$_SESSION[removeProduto]</div>";
     unset($_SESSION['removeProduto']);
-}
+  }
 
 
 if(isset($_SESSION['msgEdit'])){
-  echo "<div style='background-color:yellow'>$_SESSION[msgEdit]</div>";
+  echo "<div class='alert alert-warning' role='alert'>$_SESSION[msgEdit]</div>";
     unset($_SESSION['msgEdit']);
 } ?>
 
-<div class="container conteudo">
+<div class="container conteudo mb-4">
       <h1 class="display-4 p-3 text-center">Lista de Produtos</h1>
   <?php if($arrayProdutos){ ?>
     <table class="table table-bordered table-hover">
@@ -57,9 +57,9 @@ if(isset($_SESSION['msgEdit'])){
                 <td class="text-center"><a type="button" class="btn btn-primary btn-sm" href="showProduto.php?produto=<?=$key?>">Exibir</a></td>
                 <td class="text-center"><a type="button" class="btn btn-secondary btn-sm" href="editProduto.php?produto=<?=$key?>">Editar</a></td>
               </tr>
-        <?php } } else { ?>
-       <p class="alert alert-warning">Nenhuma informação para exibir. Vá para a página de <a href='createProduto.php'>cadastro de produtos</a></p>
-     <?php } ?>
+        <?php } } else {
+          header('Location:createProduto.php');
+             } ?>
    </thead>
    </table>
  </div>

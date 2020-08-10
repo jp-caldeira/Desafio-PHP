@@ -22,9 +22,9 @@ $arrayProdutos = json_decode($arrayProdutos, true);
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
      <link rel="stylesheet" href="style.css">
    </head>
-<?php include 'navbar.php' ?>
    <body>
-     <div class="container conteudo text-center">
+     <?php include 'navbar.php' ?>
+     <div class="container conteudo text-center mb-4">
         <h1 class="display-4 p-3">Cadastro de produtos</h1>
      <?php
 
@@ -53,13 +53,13 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                      </div>
                        <div class="col-3">
                          <?php if(isset($_SESSION['errNomeProduto'])) : ?>
-                         <input class="form-control form-control-sm is-invalid" type="text" name="NomeProduto" value="">
+                         <input class="form-control form-control-sm is-invalid" type="text" name="NomeProduto" value="" required>
                               <div class="invalid-feedback">
                                   <?php echo $_SESSION['errNomeProduto'];
                                        unset($_SESSION['errNomeProduto']);?>
                               </div><br>
                         <?php else: ?>
-                        <input class="form-control form-control-sm" type="text" name="NomeProduto" value=""><br>
+                        <input class="form-control form-control-sm" type="text" name="NomeProduto" value="" required><br>
                       <?php  endif; ?>
                       </div>
                 </div>
@@ -69,7 +69,7 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                 </div>
                   <?php if(isset($_SESSION['erroPreco'])): ?>
                   <div class="col-3">
-                  <input class="form-control form-control-sm is-invalid" type="number" name="precoProduto" min="0" step="0.01" value="">
+                  <input class="form-control form-control-sm is-invalid" type="number" name="precoProduto" min="0" step="0.01" value="" required>
                     <div class="invalid-feedback">
                       <?php echo $_SESSION['erroPreco'];
                             unset($_SESSION['erroPreco']); ?>
@@ -77,7 +77,7 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                   </div>
                   <?php else: ?>
                     <div class="col-1">
-                      <input class="form-control form-control-sm" type="number" name="precoProduto" min="0" step="0.01" value=""><br>
+                      <input class="form-control form-control-sm" type="number" name="precoProduto" min="0" step="0.01" value="" required><br>
                     </div>
                 <?php endif; ?>
             </div>
@@ -87,19 +87,19 @@ $arrayProdutos = json_decode($arrayProdutos, true);
             </div>
             <div class="col-4">
               <?php if(isset($_SESSION['erroFoto1'])){ ?>
-                <input type="file" class="is-invalid" name="imgProduto" value="">
+                <input type="file" class="is-invalid" name="imgProduto" value="" required>
                   <div class="invalid-feedback">
                   <?php echo $_SESSION['erroFoto1'];
                     unset($_SESSION['erroFoto1']); ?>
                   </div>
                 <?php } elseif (isset($_SESSION['erroFoto2'])){ ?>
-                  <input type="file" class="is-invalid" name="imgProduto" value="">
+                  <input type="file" class="is-invalid" name="imgProduto" value="" required>
                   <div class="invalid-feedback">
                   <?php echo $_SESSION['erroFoto2'];
                       unset($_SESSION['erroFoto2']); ?>
                     </div>
                   <?php } else { ?>
-                    <input type="file" name="imgProduto" value="">
+                    <input type="file" name="imgProduto" value="" required>
                   <?php } ?>
             </div>
       </div>
