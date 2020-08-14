@@ -8,7 +8,7 @@ $nomeOK = true;
 $emailOK = true;
 $senhaOK = true;
 
-$arrayClientes = file_get_contents('usuarios.json');
+$arrayClientes = file_get_contents('../json/usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
 
@@ -39,7 +39,7 @@ if($_POST){
   if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['errUserEmail'] = "Email inválido<br>";
     $emailOK = false;
-  } 
+  }
 
   if($arrayClientes){
     if (in_array($email, $arrayEmails)){
@@ -51,7 +51,7 @@ if($_POST){
   if(strlen($senha1) < 6){
     $_SESSION['errNewSenha1'] = "Senha deve ter pelo menos seis caracteres<br>";
         $senhaValid1 = false;
-      } 
+      }
 
       if ($senha1 === $senha2){
         $senhaValid2 = true;
@@ -63,7 +63,7 @@ if($_POST){
       //validando e criptografando
     if ($senhaValid1 && $senhaValid2){
         $criptoSenha = password_hash($senha1, PASSWORD_DEFAULT);
-      } else {        
+      } else {
         $senhaOK = false;
       }
 //salvando no json
@@ -72,12 +72,12 @@ if($_POST){
         $arrayinsert = ["nome" => $nomeUsuario, "email" => $email, "senha" => $criptoSenha];
         $arrayClientes[$email] = $arrayinsert;
         $arrayClientes = json_encode($arrayClientes);
-        file_put_contents('usuarios.json', $arrayClientes);
+        file_put_contents('../json/usuarios.json', $arrayClientes);
         $_SESSION['msgCadastroUser'] = true;
-        header('Location:createUsuario.php');
+        header('Location:../../createUsuario.php');
       } else {
         $_SESSION['msgCadastroUser'] = false;
-        header('Location:createUsuario.php');
+        header('Location:../../createUsuario.php');
       }
 }
 

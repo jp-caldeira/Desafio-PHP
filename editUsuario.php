@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
+    header('Location:assets/acess-denied.html');
     die();
 }
 
@@ -13,7 +13,7 @@ if(!$_GET){
   die();
    }
 
-   $arrayUsuarios = file_get_contents('usuarios.json');
+   $arrayUsuarios = file_get_contents('assets/json/usuarios.json');
    $arrayUsuarios = json_decode($arrayUsuarios, true);
 
 if(isset($_GET['usuario'])){
@@ -46,10 +46,10 @@ $_SESSION['currentPass'] = $arrayUsuarios[$user]['senha'];
     <meta name='viewport' content="width=device-width, initial-scale=1.0">
     <title>Editar Usuário</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-    <?php include 'navbar.php' ?>
+    <?php include 'assets/navbar.php' ?>
     <div class="container conteudo text-center mb-4">
       <h1 class="display-4 p-3">Editar Usuário</h1>
           <p><strong>Nome: </strong><?=$arrayUsuarios[$user]['nome'] ?></p>
@@ -58,13 +58,14 @@ $_SESSION['currentPass'] = $arrayUsuarios[$user]['senha'];
       <?php if (isset($_SESSION['msgCadastro'])){
       if ($_SESSION['msgCadastro']){?>
       <div class='alert alert-success'>Informações atualizadas com sucesso!</div>
-      <?php  } else { ?>
+      <?php unset($_SESSION['msgCadastro']);
+            } else { ?>
       <div class="alert alert-danger">As informações não foram atualizadas. Confira os erros abaixo:</div>
-      <?php }
+      <?php unset($_SESSION['msgCadastro']); }
             } ?>
 
 
-      <form class="form-group p-2" action="userEdit.php" method="post">
+      <form class="form-group p-2" action="assets/edit/userEdit.php" method="post">
              <div class="form-row">
                 <div class="col-1 offset-4">
                     <label for="nomeUsuario">Nome:</label>
@@ -134,7 +135,7 @@ $_SESSION['currentPass'] = $arrayUsuarios[$user]['senha'];
             </div>
               <button type="submit" class="btn btn-primary" name="button">Enviar</button>
       </form>
-          <form class="" action="removerUsuario.php" method="post">
+          <form class="" action="assets/remove/removerUsuario.php" method="post">
           <button type="submit" class="btn btn-secondary" name="remover" value="<?=$user?>">Remover Cliente</button>
     </div>
 

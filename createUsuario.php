@@ -3,11 +3,11 @@
 session_start();
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
+    header('Location:assets/acess-denied.html');
     die();
 }
 
-$arrayClientes = file_get_contents('usuarios.json');
+$arrayClientes = file_get_contents('assets/json/usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
 
@@ -20,10 +20,10 @@ $arrayClientes = json_decode($arrayClientes, true);
       <meta name='viewport' content="width=device-width, initial-scale=1.0">
       <title>Cadastro de usuários</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-    <?php include "navbar.php" ?>
+    <?php include "assets/navbar.php" ?>
     <div class="container conteudo text-center">
         <h1 class="display-4 p-3">Cadastrar novo usuário</h1>
       <!-- exibindo mensagem de sucesso ou erro no cadastro -->
@@ -46,7 +46,7 @@ $arrayClientes = json_decode($arrayClientes, true);
 
 
   <h5 class="mb-4">Preencha as informações abaixo para cadastrar um novo usuário:</h5>
-          <form class="form-group p-2" action="newUser.php" method="post">
+          <form class="form-group p-2" action="assets/create/newUser.php" method="post">
              <!-- nome do usuario    -->
              <div class="form-row">
                     <div class="col-1 offset-4">

@@ -13,7 +13,7 @@ $nomeOK = true;
 $emailOK = true;
 $senhaOK = true;
 
-$arrayClientes = file_get_contents('usuarios.json');
+$arrayClientes = file_get_contents('../json/usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
 
@@ -71,20 +71,20 @@ if($_POST){
                 $arrayInsert = ["nome" => $currentName, "email" => $currentEmail, "senha" => $currentPass];
                 $arrayClientes[$currentEmail] = $arrayInsert;
                 $arrayClientes = json_encode($arrayClientes);
-                file_put_contents('usuarios.json', $arrayClientes);
-                header("Location:editUsuario.php?usuario=$currentEmail");
+                file_put_contents('../json/usuarios.json', $arrayClientes);
+                header("Location:../../editUsuario.php?usuario=$currentEmail");
                 die();
             } else {
                 $arrayinsert = ["nome" => $nomeUsuario, "email" => $email, "senha" => $criptoSenha];
                 $arrayClientes[$email] = $arrayinsert;
                 $arrayClientes = json_encode($arrayClientes);
-                file_put_contents('usuarios.json', $arrayClientes);
+                file_put_contents('../json/usuarios.json', $arrayClientes);
                 $_SESSION['msgCadastro'] = true;
-                header("Location:editUsuario.php?usuario=$email");
+                header("Location:../../editUsuario.php?usuario=$email");
           }
       } else {
           $_SESSION['msgCadastro'] = false;
-          header("Location:editUsuario.php?usuario=$email");
+          header("Location:../../editUsuario.php?usuario=$email");
       }
 }
 

@@ -3,11 +3,11 @@
 session_start();
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
+    header('Location:assets/acess-denied.html');
     die();
 }
 
-$arrayProdutos = file_get_contents('produtos.json');
+$arrayProdutos = file_get_contents('assets/json/produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
  ?>
 
@@ -18,10 +18,10 @@ $arrayProdutos = json_decode($arrayProdutos, true);
     <meta name="viewport" content="width=device-width, inital-scale=1.0">
     <title>Index Produtos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-    <?php include 'navbar.php';
+    <?php include 'assets/navbar.php';
     if(isset($_SESSION['removeProduto'])){
     echo "<div class='alert alert-warning' role='alert'>$_SESSION[removeProduto]</div>";
     unset($_SESSION['removeProduto']);

@@ -16,7 +16,7 @@ if(!$_GET){
    }
 
 //pegando infos no json
-$arrayProdutos = file_get_contents('produtos.json');
+$arrayProdutos = file_get_contents('assets/json/produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 $produtoId = $_GET['produto'];
 $_SESSION['produtoId'] = $produtoId;
@@ -36,10 +36,10 @@ $_SESSION['produtoId'] = $produtoId;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-    <?php include 'navbar.php' ?>
+    <?php include 'assets/navbar.php' ?>
     <div class="container conteudo text-center mb-4">
     <h1 class="display-4 p-3">Editar informações do produto</h1>
           <?php if (isset($_SESSION['editProduto'])){
@@ -59,7 +59,7 @@ $_SESSION['produtoId'] = $produtoId;
       <img class="img-fluid" src="<?=$arrayProdutos[$produtoId]['imagem']?>" alt="" width="307" height="240">
     </div>
       <h4 class="alert alert-info mt-4">Insira as informações abaixo para editar o produto</h5>
-    <form class="form-group p-2" action="editProd2.php" method="post" enctype="multipart/form-data">
+    <form class="form-group p-2" action="assets/edit/editProd2.php" method="post" enctype="multipart/form-data">
                     <!-- nome -->
       <div class="form-row">
         <div class="col-3 offset-2">
@@ -125,12 +125,12 @@ $_SESSION['produtoId'] = $produtoId;
                     <label for="descricaoProduto">Descrição do produto (opcional):</label><br>
                 </div>
                 <div class="col-4">
-                  <textarea class="form-control form-control-sm" name="descricaoProduto" value="" rows="4" cols="50"></textarea><br>
+                  <textarea class="form-control form-control-sm" name="descricaoProduto" value="<?=$arrayProdutos[$produtoId]['descrição']?>" rows="4" cols="50"><?=$arrayProdutos[$produtoId]['descrição']?></textarea><br>
                 </div>
               </div>
                 <button class="btn btn-primary col-4" type="submit" name="Enviar" value="">Enviar</button>
              </form>
-             <form class="" action="removeProduto.php" method="post">
+             <form class="" action="assets/remove/removeProduto.php" method="post">
                <button type="submit" name="remover" class="btn btn-secondary col-4" value="<?=$arrayProdutos[$produtoId]['idProduto']?>">Remover Produto</button>
              </form>
   </div>

@@ -4,7 +4,7 @@ session_start();
 
 
 
-$arrayProdutos = file_get_contents('produtos.json');
+$arrayProdutos = file_get_contents('../json/produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 
 $nomeOK = true;
@@ -17,12 +17,13 @@ $produtoId = $_SESSION['produtoId'];
 if($_POST){
     $nomeProduto = $_POST['NomeProduto'];
     $nomeProduto = trim($nomeProduto);
-    if (empty($nomeProduto) || strlen($nomeProduto) < 3){
-     $nomeOK = false;
-     $_SESSION['errNomeProduto'] = "O campo <strong>NOME</strong> do produto não foi digitado corretamente<br>";
-     } else {
-     $arrayProdutos[$produtoId]['nome'] = $nomeProduto;
-     }
+
+        if (empty($nomeProduto) || strlen($nomeProduto) < 3){
+         $nomeOK = false;
+         $_SESSION['errNomeProduto'] = "O campo <strong>NOME</strong> do produto não foi digitado corretamente<br>";
+         } else {
+         $arrayProdutos[$produtoId]['nome'] = $nomeProduto;
+         }
       //validação preço
        $preco = $_POST['precoProduto'];
         if(!is_numeric($preco) || $preco < 0){
@@ -34,7 +35,7 @@ if($_POST){
       //descricao
      $descrição = $_POST['descricaoProduto'];
      $arrayProdutos[$produtoId]['descrição'] = $descrição;
-   }
+}
 
 
 
@@ -57,8 +58,8 @@ if($_POST){
            $tempfile = $_FILES['imgProduto']['tmp_name'];
            $arquivoExt = pathinfo($_FILES['imgProduto']['name'], PATHINFO_EXTENSION);
            $arquivoNome = "imgProduto".$produtoId.".".$arquivoExt;
-           move_uploaded_file($tempfile, 'img/'.$arquivoNome);
-           $arrayProdutos[$produtoId]['imagem'] = "img/".$arquivoNome;
+           move_uploaded_file($tempfile, '../img/'.$arquivoNome);
+           $arrayProdutos[$produtoId]['imagem'] = "assets/img/".$arquivoNome;
            $fotoOK = true;
          } else {
            $fotoOK = false;
@@ -69,15 +70,15 @@ if($_POST){
 if($_POST){
    if($nomeOK && $precoOK && $fotoOK){
    $_SESSION['editProduto'] = true;
-   header("Location:editProduto.php?produto=$produtoId");
+   header("Location:../../editProduto.php?produto=$produtoId");
  } else {
    $_SESSION['editProduto'] = false;
-   header("Location:editProduto.php?produto=$produtoId");
+   header("Location:../../editProduto.php?produto=$produtoId");
  }
 }
 
    //salvando as novas informações no json
    $arrayProdutos = json_encode($arrayProdutos);
-   file_put_contents('produtos.json', $arrayProdutos);
+   file_put_contents('../json/produtos.json', $arrayProdutos);
 
 ?>

@@ -13,7 +13,7 @@ if($_POST){
     $emailLogin = $_POST['Email'];
     $_SESSION['user'] = $_POST['Email'];
     $pass = $_POST['pass'];
-    $arrayClientes = file_get_contents('usuarios.json');
+    $arrayClientes = file_get_contents('json/usuarios.json');
     $arrayClientes = json_decode($arrayClientes, true);
 
     foreach($arrayClientes as $cliente){
@@ -28,7 +28,7 @@ if(isset($_POST['Email'])){
         $_SESSION['emailErr'] = "Email não cadastrado no sistema!";
         $emailLoginOK = false;
         echo $_SESSION['emailErr'];
-        header('location:login.php');
+        header('location:../login.php');
         die();
       }
 }
@@ -39,11 +39,11 @@ if(isset($_POST['Email'])){
         if (password_verify($senhaInput, $senhaSalva)) {
           echo "<br>as senhas são iguais<br>";
           $_SESSION['usuariologado'] = true;
-          header('Location:painel-adm.php');
+          header('Location:../painel-adm.php');
         } else {
           echo "<br>senha ERRADA!<br>";
           $_SESSION['erroSenha'] = "A senha está errada!<br>";
-          header('location:login.php');
+          header('location:../login.php');
         }
 
 

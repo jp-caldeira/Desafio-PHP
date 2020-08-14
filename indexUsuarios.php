@@ -5,11 +5,11 @@
   }
 
 if(!isset($_SESSION['usuariologado'])){
-     header('Location:acess-denied.html');
+     header('Location:assets/acess-denied.html');
      die();
  }
 
-$arrayClientes = file_get_contents('usuarios.json');
+$arrayClientes = file_get_contents('assets/json/usuarios.json');
 $arrayClientes = json_decode($arrayClientes, true);
 
  ?>
@@ -21,10 +21,10 @@ $arrayClientes = json_decode($arrayClientes, true);
     <meta name='viewport' content="width=device-width, initial-scale=1.0">
     <title>Lista de usuários cadastrados</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
- <?php include_once 'navbar.php';
+ <?php include_once 'assets/navbar.php';
 
  if (isset($_SESSION['msgRemove'])){
   echo "<div class='alert alert-warning' role='alert'>$_SESSION[msgRemove]</div>";
@@ -55,7 +55,7 @@ if(isset($_SESSION['msgEditUser'])){
               <td><?=$cliente["nome"]?></td>
               <td><?=$cliente["email"]?></td>
               <td class="text-center"><a type="button" class="btn btn-primary btn-sm" href="editUsuario.php?usuario=<?=$cliente["email"]?>">Editar</a></td>
-              <form class="" action="removerUsuario.php" method="post">
+              <form class="" action="assets/remove/removerUsuario.php" method="post">
               <td class="text-center"><button type="submit"  class="btn btn-secondary btn-sm" name="remover" value="<?=$cliente["email"]?>">Remover</button></td>
               </form>
           </tr>

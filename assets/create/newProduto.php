@@ -28,7 +28,7 @@ if (empty($nomeProduto) || strlen($nomeProduto) < 3){
     }
 
 //pegando infos do json
-$arrayProdutos = file_get_contents('produtos.json');
+$arrayProdutos = file_get_contents('../json/produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 
 //setando um id
@@ -73,8 +73,8 @@ if($_FILES){
         $tempfile = $_FILES['imgProduto']['tmp_name'];
         $arquivoExt = pathinfo($_FILES['imgProduto']['name'], PATHINFO_EXTENSION);
         $arquivoNome = "imgProduto".$id.".".$arquivoExt;
-        move_uploaded_file($tempfile, 'img/'.$arquivoNome);
-        $arrayInsert['imagem'] = "img/".$arquivoNome;
+        move_uploaded_file($tempfile, '../img/'.$arquivoNome);
+        $arrayInsert['imagem'] = "assets/img/".$arquivoNome;
         $fotoOK = true;
       } else {
         $fotoOK = false;
@@ -86,16 +86,16 @@ if(isset($arrayInsert)){
  if($precoOK && $nomeOK && $fotoOK){
        $arrayProdutos[$id] = $arrayInsert;
        $produtoData = json_encode($arrayProdutos);
-       file_put_contents('produtos.json', $produtoData);
+       file_put_contents('../json/produtos.json', $produtoData);
      $_SESSION['msgCadastro'] = true;
-     header('location:createProduto.php');
+     header('location:../../createProduto.php');
      } else {
      $_SESSION['msgCadastro'] = false;
-     header('location:createProduto.php');
+     header('location:../../createProduto.php');
    }
  } else {
    $_SESSION['msgCadastro'] = false;
-   header('location:createProduto.php');
+   header('location:../../createProduto.php');
  }
 
 

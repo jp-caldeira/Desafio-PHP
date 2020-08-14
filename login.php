@@ -1,6 +1,6 @@
 <?php
 
-include ('verify-login.php');
+include ('assets/verify-login.php');
 
  ?>
 
@@ -12,13 +12,13 @@ include ('verify-login.php');
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Faça seu login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
     <div class="main-content">
       <div class="inner">
         <h1>Faça seu login</h1>
-          <form class="form-group p-2" action="verify-login.php" method="post">
+          <form class="form-group p-2" action="assets/verify-login.php" method="post">
             <label for="Email">E-mail:</label><br>
                 <?php if(isset($_SESSION['emailErr'])): ?>
                 <input type="email" name="Email" class="form-control form-control-sm is-invalid" value="<?php if (isset($_SESSION['user'])) : echo $_SESSION['user']; unset($_SESSION['user']); else: echo ''; endif; ?>">

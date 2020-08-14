@@ -3,12 +3,12 @@
 session_start();
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
+    header('Location:assets/acess-denied.html');
     die();
 }
 
   if(isset($_GET['produto'])){
-      $arrayProdutos = file_get_contents('produtos.json');
+      $arrayProdutos = file_get_contents('assets/json/produtos.json');
       $arrayProdutos = json_decode($arrayProdutos, true);
       $produtoId = $_GET['produto'];
   }
@@ -22,10 +22,10 @@ if(!isset($_SESSION['usuariologado'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar produto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-    <?php include_once 'navbar.php'; ?>
+    <?php include_once 'assets/navbar.php'; ?>
     <div class="container conteudo text-center">
         <?php if (isset($_GET['produto'])) : ?>
         <h1 class="display-4 p-3"><?=$arrayProdutos[$produtoId]['nome']?></h1>

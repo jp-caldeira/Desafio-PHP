@@ -12,5 +12,4 @@
         <a class="nav-item p-2"><button type="submit" name="logoff" class="btn btn-danger">Sair do sistema</button></a>
         </form>
         <?php endif; ?>
-
 </nav>

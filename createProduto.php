@@ -4,11 +4,11 @@
 session_start();
 
 if(!isset($_SESSION['usuariologado'])){
-    header('Location:acess-denied.html');
+    header('Location:assets/acess-denied.html');
     die();
 }
 
-$arrayProdutos = file_get_contents('produtos.json');
+$arrayProdutos = file_get_contents('assets/json/produtos.json');
 $arrayProdutos = json_decode($arrayProdutos, true);
 
  ?>
@@ -20,10 +20,10 @@ $arrayProdutos = json_decode($arrayProdutos, true);
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Cadastrar Produto</title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-     <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="assets/css/style.css">
    </head>
    <body>
-     <?php include 'navbar.php' ?>
+     <?php include 'assets/navbar.php' ?>
      <div class="container conteudo text-center mb-4">
         <h1 class="display-4 p-3">Cadastro de produtos</h1>
      <?php
@@ -46,7 +46,7 @@ $arrayProdutos = json_decode($arrayProdutos, true);
                     } ?>
 
             <h5 class="mb-4">Insira as informações abaixo para cadastrar um novo produto</h5>
-         <form class="form-group p-2" action="newProduto.php" method="post" enctype="multipart/form-data">
+         <form class="form-group p-2" action="assets/create/newProduto.php" method="post" enctype="multipart/form-data">
               <div class="form-row">
                      <div class="col-3 offset-2">
                        <label for="nomeProduto">Nome do produto:</label>
