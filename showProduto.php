@@ -13,8 +13,8 @@ if(!isset($_SESSION['usuariologado'])){
       $produtoId = $_GET['produto'];
   }
 
-
   ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -36,7 +36,7 @@ if(!isset($_SESSION['usuariologado'])){
             <div class="col-5">
               <ul class="list-group">
                 <li class="list-group-item"><strong>Preço:</strong> R$ <?=$arrayProdutos[$produtoId]['preço']?></li>
-                <li class="list-group-item"><strong>ID: </strong> <?=$arrayProdutos[$produtoId]['idProduto'] ?></li>
+                <li class="list-group-item"><strong>ID:</strong> <?=$arrayProdutos[$produtoId]['idProduto'] ?></li>
                 <li class="list-group-item"><strong>Descrição: </strong><?=$arrayProdutos[$produtoId]['descrição']?></li>
                 <br>
                 <br>
